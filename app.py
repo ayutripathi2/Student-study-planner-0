@@ -1,6 +1,6 @@
 
 from flask import Flask,render_template,request,redirect, session, flash
-from databse import connection,cursor
+from backend.database import connection,cursor
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 
