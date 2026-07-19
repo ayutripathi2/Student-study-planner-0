@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+         
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h2>StudyPlanner</h2>
+        </div>
+
+        <nav>
+
+            <a href="/dashboard" class="active">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </a>
+
+            <a href="/tasks">
+                <i class="fa-solid fa-list-check"></i>
+                Tasks
+            </a>
+
+            <a href="/progress">
+                <i class="fa-solid fa-chart-line"></i>
+                Progress
+            </a>
+
+            <a href="/profile">
+                <i class="fa-solid fa-user"></i>
+                Profile
+            </a>
+
+            <a href="/logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- Main -->
+
+    <main class="content">
+
+        <!-- Header -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>Welcome back, {{ user_name }} 👋</h1>
+
+                <p>Stay focused and keep building your future.</p>
+
+            </div>
+
+            <div class="top-actions">
+
+                <input
+    type="text"
+    id="searchInput"
+    placeholder="Search tasks...">
+
+                <a href="/add-task" class="add-task-btn">
+                    + Add Task
+                </a>
+
+            </div>
+
+        </header>
+
+        <!-- Stats -->
+
+       <section class="stats">
+
+    <div class="stat-card">
+
+        <div class="stat-left">
+            <h3>Total Tasks</h3>
+            <h2>{{ total_tasks }}</h2>
+            <p>All your tasks</p>
+        </div>
+
+        <div class="stat-icon blue">
+            <i class="fa-solid fa-list-check"></i>
+        </div>
+
+    </div>
+
+    <div class="stat-card">
+
+        <div class="stat-left">
+            <h3>Completed</h3>
+            <h2>{{ completed_tasks }}</h2>
+            <p>Finished tasks</p>
+        </div>
+
+        <div class="stat-icon green">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+
+    </div>
+
+    <div class="stat-card">
+
+        <div class="stat-left">
+            <h3>Pending</h3>
+            <h2>{{ pending_tasks }}</h2>
+            <p>Need attention</p>
+        </div>
+
+        <div class="stat-icon orange">
+            <i class="fa-solid fa-clock"></i>
+        </div>
+
+    </div>
+
+    <div class="stat-card">
+
+        <div class="stat-left">
+            <h3>Completion</h3>
+            <h2>{{ completion_percentage }}%</h2>
+            <p>Overall progress</p>
+        </div>
+
+        <div class="stat-icon purple">
+            <i class="fa-solid fa-chart-pie"></i>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="task-section">
+
+    <div class="task-header">
+
+        <h2>My Tasks</h2>
+
+        
+
+    </div>
+
+    <table class="task-table" id="taskTable">
+
+        <thead>
+
+            <tr>
+
+                <th>Task</th>
+                <th>Subject</th>
+                <th>Deadline</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for task in tasks %}
+
+            <tr>
+
+                <td>{{ task[1] }}</td>
+
+                <td>{{ task[2] }}</td>
+
+                <td>{{ task[3] }}</td>
+
+                <td>
+
+                    {% if task[4] == "High" %}
+                        <span class="priority high">High</span>
+
+                    {% elif task[4] == "Medium" %}
+                        <span class="priority medium">Medium</span>
+
+                    {% else %}
+                        <span class="priority low">Low</span>
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    {% if task[5] == "Completed" %}
+                        <span class="status completed">
+                            Completed
+                        </span>
+
+                    {% else %}
+                        <span class="status pending">
+                            Pending
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+                <td class="actions">
+
+   <a href="/edit-task/{{ task[0] }}"
+   title="Edit Task">
+
+    <i class="fa-solid fa-pen"></i>
+
+</a>
+
+    {% if task[5] == "Pending" %}
+
+    <a href="/complete-task/{{ task[0] }}"
+       title="Complete">
+
+        <i class="fa-solid fa-circle-check"></i>
+
+    </a>
+
+    {% endif %}
+
+    <a href="/delete-task/{{ task[0] }}"
+       onclick="return confirm('Delete this task?')">
+
+        <i class="fa-solid fa-trash"></i>
+
+    </a>
+
+</td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</section>
+
+
+        <!-- We'll add chart, upcoming deadlines and task table next -->
+
+    </main>
+
+</div>
+
+<script>
+
+
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("keyup", function(){
+
+    let filter = searchInput.value.toLowerCase();
+
+    let rows = document.querySelectorAll("#taskTable tbody tr");
+
+    rows.forEach(function(row){
+
+        let title = row.cells[0].textContent.toLowerCase();
+        let subject = row.cells[1].textContent.toLowerCase();
+
+        if(title.includes(filter) || subject.includes(filter)){
+            row.style.display = "";
+        }
+        else{
+            row.style.display = "none";
+        }
+
+    });
+
+});
+
+
+</script>
+</body>
+</html>

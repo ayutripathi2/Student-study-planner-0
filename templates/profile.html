@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h2>StudyPlanner</h2>
+        </div>
+
+        <nav>
+
+            <a href="/dashboard">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </a>
+
+            <a href="/tasks">
+                <i class="fa-solid fa-list-check"></i>
+                Tasks
+            </a>
+
+            <a href="/progress">
+                <i class="fa-solid fa-chart-line"></i>
+                Progress
+            </a>
+
+            <a href="/profile" class="active">
+                <i class="fa-solid fa-user"></i>
+                Profile
+            </a>
+
+            <a href="/logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- Main Content -->
+
+    <main class="content">
+
+        <div class="profile-container">
+
+            <h1>My Profile</h1>
+
+            <div class="profile-card">
+
+                <div class="profile-icon">
+                    <i class="fa-solid fa-circle-user"></i>
+                </div>
+
+                <div class="profile-info">
+
+                    <p><strong>Full Name :</strong> {{ user[0] }}</p>
+
+                    <p><strong>Email :</strong> {{ user[1] }}</p>
+
+                    <p><strong>Member Since :</strong> {{ user[2].strftime('%d %B %Y') }}</p>
+
+                </div>
+
+            </div>
+
+            <h2 style="margin-top:40px;">Your Statistics</h2>
+
+            <div class="stats-container">
+
+                <div class="stat-card">
+                    <h3>{{ total_tasks }}</h3>
+                    <p>Total Tasks</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>{{ completed }}</h3>
+                    <p>Completed</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>{{ pending }}</h3>
+                    <p>Pending</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

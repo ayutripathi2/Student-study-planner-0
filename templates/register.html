@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="flash-message {{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<div class="register-container">
+
+    <form class="register-card" method="POST" action="/register">
+
+        <h2>Create Account</h2>
+
+        <p>Welcome to Student Study Planner</p>
+
+        <input type="text"
+       name="full_name"
+       placeholder="Full Name"
+       required>
+
+        <input type="email"
+               name="email"
+               placeholder="Email"
+               required>
+
+        <input type="password"
+       name="password"
+       placeholder="Password"
+       required>
+
+        <input type="password"
+               name="confirm_password"
+               placeholder="Confirm Password"
+               required>
+
+        <button>
+
+            Register
+
+        </button>
+
+        <span>
+
+            Already have an account?
+
+            <a href="#">Login</a>
+
+        </span>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>

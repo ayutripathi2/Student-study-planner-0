@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tasks</title>
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h2>StudyPlanner</h2>
+        </div>
+
+        <nav>
+
+            <a href="/dashboard">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </a>
+
+            <a href="/tasks" class="active">
+                <i class="fa-solid fa-list-check"></i>
+                Tasks
+            </a>
+
+            <a href="/progress">
+                <i class="fa-solid fa-chart-line"></i>
+                Progress
+            </a>`
+
+            <a href="/profile">
+                <i class="fa-solid fa-user"></i>
+                Profile
+            </a>
+
+            <a href="/logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- Main Content -->
+
+    <main class="content">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>My Tasks</h1>
+
+                <p>Manage all your study tasks here.</p>
+
+            </div>
+
+            <a href="/add-task" class="add-task-btn">
+                + Add Task
+            </a>
+
+        </header>
+
+        <section class="task-section">
+
+            <div class="task-header">
+
+                <h2>All Tasks</h2>
+
+            </div>
+
+            <table class="task-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Task</th>
+                        <th>Subject</th>
+                        <th>Deadline</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for task in tasks %}
+
+                    <tr>
+
+                        <td>{{ task[1] }}</td>
+
+                        <td>{{ task[2] }}</td>
+
+                        <td>{{ task[3] }}</td>
+
+                        <td>
+
+                            {% if task[4]=="High" %}
+                                <span class="priority high">High</span>
+
+                            {% elif task[4]=="Medium" %}
+                                <span class="priority medium">Medium</span>
+
+                            {% else %}
+                                <span class="priority low">Low</span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {% if task[5]=="Completed" %}
+                                <span class="status completed">
+                                    Completed
+                                </span>
+
+                            {% else %}
+                                <span class="status pending">
+                                    Pending
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td class="actions">
+
+                            <a href="/edit-task/{{ task[0] }}">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+
+                            {% if task[5]=="Pending" %}
+
+                            <a href="/complete-task/{{ task[0] }}">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </a>
+
+                            {% endif %}
+
+                            <a href="/delete-task/{{ task[0] }}"
+                               onclick="return confirm('Delete this task?')">
+
+                                <i class="fa-solid fa-trash"></i>
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Task</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="form-container">
+
+    <form class="task-form" method="POST">
+
+        <h2>{{ page_title }}</h2>
+
+        <input
+type="text"
+name="title"
+placeholder="Task Title"
+value="{{ task[2] if task else '' }}"
+required>
+
+        <input
+type="text"
+name="subject"
+placeholder="Subject"
+value="{{ task[3] if task else '' }}">
+
+        <textarea
+name="description"
+placeholder="Description">{{ task[4] if task else '' }}</textarea>
+
+       <input
+type="date"
+name="deadline"
+value="{{ task[5] if task else '' }}">
+
+        <select name="priority">
+
+<option value="Low"
+{% if task and task[6]=='Low' %}selected{% endif %}>
+Low
+</option>
+
+<option value="Medium"
+{% if not task or task[6]=='Medium' %}selected{% endif %}>
+Medium
+</option>
+
+<option value="High"
+{% if task and task[6]=='High' %}selected{% endif %}>
+High
+</option>
+
+</select>
+
+        <button type="submit">
+
+{{ button_text }}
+
+</button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

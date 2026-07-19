@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress</title>
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/progress.css') }}">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h2>StudyPlanner</h2>
+        </div>
+
+        <nav>
+
+            <a href="/dashboard">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </a>
+
+            <a href="/tasks">
+                <i class="fa-solid fa-list-check"></i>
+                Tasks
+            </a>
+
+            <a href="/progress" class="active">
+                <i class="fa-solid fa-chart-line"></i>
+                Progress
+            </a>
+
+            <a href="/profile">
+                <i class="fa-solid fa-user"></i>
+                Profile
+            </a>
+
+            <a href="/logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- Main Content -->
+
+    <main class="content">
+
+        <div class="progress-container">
+
+            <h1>My Progress</h1>
+
+            <div class="stats-container">
+
+                <div class="stat-card">
+                    <h2>{{ total }}</h2>
+                    <p>Total Tasks</p>
+                </div>
+
+                <div class="stat-card">
+                    <h2>{{ completed }}</h2>
+                    <p>Completed</p>
+                </div>
+
+                <div class="stat-card">
+                    <h2>{{ pending }}</h2>
+                    <p>Pending</p>
+                </div>
+
+                <div class="stat-card">
+                    <h2>{{ percentage }}%</h2>
+                    <p>Completion</p>
+                </div>
+
+            </div>
+
+            <div class="progress-box">
+
+                <h3>Overall Progress</h3>
+
+                <div class="progress-bar">
+
+                    <div class="progress-fill"
+                         style="width: {{ percentage }}%"></div>
+
+                </div>
+
+                <p>{{ percentage }}% Completed</p>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
