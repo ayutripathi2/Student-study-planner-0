@@ -145,13 +145,13 @@ def add_task():
 
         title = request.form["title"]
         subject = request.form["subject"]
-        description = request.form["description"]
+        
         deadline = request.form["deadline"]
         priority = request.form["priority"]
 
         cursor.execute("""
         INSERT INTO tasks
-        (user_id,title,subject,description,deadline,priority)
+        (user_id,title,subject,deadline,priority)
 
         VALUES(%s,%s,%s,%s,%s,%s)
         """, (
@@ -159,7 +159,7 @@ def add_task():
             session["user_id"],
             title,
             subject,
-            description,
+            
             deadline,
             priority
 
@@ -221,7 +221,7 @@ def edit_task(task_id):
 
         title = request.form["title"]
         subject = request.form["subject"]
-        description = request.form["description"]
+       
         deadline = request.form["deadline"]
         priority = request.form["priority"]
 
@@ -229,7 +229,7 @@ def edit_task(task_id):
             UPDATE tasks
             SET title=%s,
                 subject=%s,
-                description=%s,
+                
                 deadline=%s,
                 priority=%s
             WHERE id=%s
@@ -237,7 +237,7 @@ def edit_task(task_id):
         """,(
             title,
             subject,
-            description,
+            
             deadline,
             priority,
             task_id,
