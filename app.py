@@ -292,7 +292,7 @@ def profile():
         return redirect("/login")
 
     cursor.execute("""
-        SELECT full_name, email, created_at
+        SELECT full_name, email
         FROM users
         WHERE id=%s
     """, (session["user_id"],))
