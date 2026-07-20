@@ -153,7 +153,7 @@ def add_task():
         INSERT INTO tasks
         (user_id,title,subject,deadline,priority)
 
-        VALUES(%s,%s,%s,%s,%s,%s)
+        VALUES(%s,%s,%s,%s,%s)
         """, (
 
             session["user_id"],
